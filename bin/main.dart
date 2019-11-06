@@ -20,6 +20,84 @@
 //    [{ x: 3, y: 2 }, { x: 5, y: 7 }]
 //  ) ➞ 6
 
-main() {
 
+bool isPandigital(int number) {
+  String numberString = number.toString();
+  Map numberMap = {};
+  int allDigitsPresent = 0;
+  for (int i = 0; i < numberString.length; i++) {
+    if (numberMap.containsKey(numberString[i])) {
+      numberMap.update(numberString[i], (e) => e + 1);
+    } else {
+      numberMap.putIfAbsent(numberString[i], () => 1);
+    }
+  }
+  for (int i = 0; i < 10; i++) {
+    if (numberMap.containsKey(i.toString())) {
+      allDigitsPresent++;
+    }
+  }
+  print(numberMap);
+  print(allDigitsPresent);
+  return allDigitsPresent == 10 ? true : false;
+}
+
+int overlappingRectangles(
+    List<Map<String, int>> rectOne, List<Map<String, int>> rectTwo) {
+  List xCoOrdsOfRectOne = [rectOne[0]['x'], rectOne[1]['x']];
+  List xCoOrdsOfRectTwo = [rectTwo[0]['x'], rectTwo[1]['x']];
+  List yCoOrdsOfRectOne = [rectOne[0]['y'], rectOne[1]['y']];
+  List yCoOrdsOfRectTwo = [rectTwo[0]['y'], rectTwo[1]['y']];
+
+  bool isOverlapping() {
+    bool xCheck = xCoOrdsOfRectOne
+                    .reduce((curr, next) => curr < next ? curr : next) >
+                xCoOrdsOfRectTwo
+                    .reduce((curr, next) => curr > next ? curr : next) ||
+            xCoOrdsOfRectOne.reduce((curr, next) => curr > next ? curr : next) >
+                xCoOrdsOfRectTwo
+                    .reduce((curr, next) => curr < next ? curr : next)
+        ? false
+        : true;
+    bool yCheck = yCoOrdsOfRectOne
+                    .reduce((curr, next) => curr < next ? curr : next) >
+                yCoOrdsOfRectTwo
+                    .reduce((curr, next) => curr > next ? curr : next) ||
+            yCoOrdsOfRectOne.reduce((curr, next) => curr > next ? curr : next) >
+                yCoOrdsOfRectTwo
+                    .reduce((curr, next) => curr < next ? curr : next)
+        ? false
+        : true;
+    return xCheck && yCheck;
+  }
+
+  if (!isOverlapping()) {
+    xCoOrdsOfRectOne.addAll(xCoOrdsOfRectTwo);
+    yCoOrdsOfRectOne.addAll(yCoOrdsOfRectTwo);
+    xCoOrdsOfRectOne.sort();
+    yCoOrdsOfRectOne.sort();
+
+    return ((xCoOrdsOfRectOne[1] - xCoOrdsOfRectOne[2]).abs()) *
+        ((yCoOrdsOfRectOne[1] - yCoOrdsOfRectOne[2]).abs());
+  }
+
+  return 0;
+}
+
+main() {
+  print(isPandigital(98140723568910));
+  print(overlappingRectangles([
+    {'x': 2, 'y': 1},
+    {'x': 5, 'y': 5}
+  ], [
+    {'x': 3, 'y': 2},
+    {'x': 5, 'y': 7}
+  ]));
+  print(overlappingRectangles([
+    {'x': 5, 'y': 0},
+    {'x': 0, 'y': 10}
+  ], [
+    {'x': 15, 'y': 15},
+    {'x': 20, 'y': 20}
+  ]));
 }
