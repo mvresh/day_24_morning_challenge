@@ -22,24 +22,24 @@
 
 
 bool isPandigital(int number) {
-  String numberString = number.toString();
-  Map numberMap = {};
-  int allDigitsPresent = 0;
-  for (int i = 0; i < numberString.length; i++) {
-    if (numberMap.containsKey(numberString[i])) {
-      numberMap.update(numberString[i], (e) => e + 1);
-    } else {
-      numberMap.putIfAbsent(numberString[i], () => 1);
-    }
-  }
-  for (int i = 0; i < 10; i++) {
-    if (numberMap.containsKey(i.toString())) {
-      allDigitsPresent++;
-    }
-  }
-  print(numberMap);
-  print(allDigitsPresent);
-  return allDigitsPresent == 10 ? true : false;
+//  String numberString = number.toString();
+//  Map numberMap = {};
+//  int allDigitsPresent = 0;
+//  for (int i = 0; i < numberString.length; i++) {
+//    if (numberMap.containsKey(numberString[i])) {
+//      numberMap.update(numberString[i], (e) => e + 1);
+//    } else {
+//      numberMap.putIfAbsent(numberString[i], () => 1);
+//    }
+//  }
+//  for (int i = 0; i < 10; i++) {
+//    if (numberMap.containsKey(i.toString())) {
+//      allDigitsPresent++;
+//    }
+//  }
+//  return allDigitsPresent == 10 ? true : false;
+  List numbersList = number.toString().split('');
+  return numbersList.toSet().length == numbersList.length;
 }
 
 int overlappingRectangles(
@@ -85,19 +85,19 @@ int overlappingRectangles(
 }
 
 main() {
-  print(isPandigital(98140723568910));
-  print(overlappingRectangles([
-    {'x': 2, 'y': 1},
-    {'x': 5, 'y': 5}
-  ], [
-    {'x': 3, 'y': 2},
-    {'x': 5, 'y': 7}
-  ]));
-  print(overlappingRectangles([
-    {'x': 5, 'y': 0},
-    {'x': 0, 'y': 10}
-  ], [
-    {'x': 15, 'y': 15},
-    {'x': 20, 'y': 20}
-  ]));
+  print(isPandigital(0123456789));
+//  print(overlappingRectangles([
+//    {'x': 2, 'y': 1},
+//    {'x': 5, 'y': 5}
+//  ], [
+//    {'x': 3, 'y': 2},
+//    {'x': 5, 'y': 7}
+//  ]));
+//  print(overlappingRectangles([
+//    {'x': 5, 'y': 0},
+//    {'x': 0, 'y': 10}
+//  ], [
+//    {'x': 15, 'y': 15},
+//    {'x': 20, 'y': 20}
+//  ]));
 }
