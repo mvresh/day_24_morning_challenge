@@ -21,6 +21,8 @@
 //  ) ➞ 6
 
 
+import 'dart:math';
+
 bool isPandigital(int number) {
 //  String numberString = number.toString();
 //  Map numberMap = {};
@@ -42,36 +44,27 @@ bool isPandigital(int number) {
   return numbersList.toSet().length == numbersList.length;
 }
 
+bool checker(List<int> CoOrdsOfRectOne, List<int> CoOrdsOfRectTwo) {
+  return CoOrdsOfRectOne
+      .reduce(min) >
+      CoOrdsOfRectTwo
+          .reduce(max) ||
+      CoOrdsOfRectOne.reduce(max) >
+          CoOrdsOfRectTwo
+              .reduce(min)
+      ? false
+      : true;
+}
+
 int overlappingRectangles(
     List<Map<String, int>> rectOne, List<Map<String, int>> rectTwo) {
-  List xCoOrdsOfRectOne = [rectOne[0]['x'], rectOne[1]['x']];
-  List xCoOrdsOfRectTwo = [rectTwo[0]['x'], rectTwo[1]['x']];
-  List yCoOrdsOfRectOne = [rectOne[0]['y'], rectOne[1]['y']];
-  List yCoOrdsOfRectTwo = [rectTwo[0]['y'], rectTwo[1]['y']];
+  List<int> xCoOrdsOfRectOne = []..addAll(rectOne.map((Map point) => point['x']));
+  List<int> xCoOrdsOfRectTwo = []..addAll(rectTwo.map((Map point) => point['x']));
+  List<int> yCoOrdsOfRectOne = []..addAll(rectOne.map((Map point) => point['y']));
+  List<int> yCoOrdsOfRectTwo = []..addAll(rectTwo.map((Map point) => point['y']));
 
-  bool isOverlapping() {
-    bool xCheck = xCoOrdsOfRectOne
-                    .reduce((curr, next) => curr < next ? curr : next) >
-                xCoOrdsOfRectTwo
-                    .reduce((curr, next) => curr > next ? curr : next) ||
-            xCoOrdsOfRectOne.reduce((curr, next) => curr > next ? curr : next) >
-                xCoOrdsOfRectTwo
-                    .reduce((curr, next) => curr < next ? curr : next)
-        ? false
-        : true;
-    bool yCheck = yCoOrdsOfRectOne
-                    .reduce((curr, next) => curr < next ? curr : next) >
-                yCoOrdsOfRectTwo
-                    .reduce((curr, next) => curr > next ? curr : next) ||
-            yCoOrdsOfRectOne.reduce((curr, next) => curr > next ? curr : next) >
-                yCoOrdsOfRectTwo
-                    .reduce((curr, next) => curr < next ? curr : next)
-        ? false
-        : true;
-    return xCheck && yCheck;
-  }
 
-  if (!isOverlapping()) {
+  if (!(checker(xCoOrdsOfRectOne, xCoOrdsOfRectTwo) && checker(yCoOrdsOfRectOne, yCoOrdsOfRectTwo))) {
     xCoOrdsOfRectOne.addAll(xCoOrdsOfRectTwo);
     yCoOrdsOfRectOne.addAll(yCoOrdsOfRectTwo);
     xCoOrdsOfRectOne.sort();

@@ -4,7 +4,7 @@ import 'main.dart';
 void main() {
   test("challenge 2 a", () {
 
-    expect(isPandigital(98140723568910), equals(true));
+    expect(isPandigital(98140723568910), equals(false));
   });
 
   test("challenge 3 a", () {
