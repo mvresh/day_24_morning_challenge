@@ -44,16 +44,14 @@ bool isPandigital(int number) {
   return numbersList.toSet().length == numbersList.length;
 }
 
-bool checker(List<int> CoOrdsOfRectOne, List<int> CoOrdsOfRectTwo) {
+bool isOverlapping(List<int> CoOrdsOfRectOne, List<int> CoOrdsOfRectTwo) {
   return CoOrdsOfRectOne
       .reduce(min) >
       CoOrdsOfRectTwo
           .reduce(max) ||
       CoOrdsOfRectOne.reduce(max) >
           CoOrdsOfRectTwo
-              .reduce(min)
-      ? false
-      : true;
+              .reduce(min);
 }
 
 int overlappingRectangles(
@@ -64,14 +62,14 @@ int overlappingRectangles(
   List<int> yCoOrdsOfRectTwo = []..addAll(rectTwo.map((Map point) => point['y']));
 
 
-  if (!(checker(xCoOrdsOfRectOne, xCoOrdsOfRectTwo) && checker(yCoOrdsOfRectOne, yCoOrdsOfRectTwo))) {
+  if ((isOverlapping(xCoOrdsOfRectOne, xCoOrdsOfRectTwo) && isOverlapping(yCoOrdsOfRectOne, yCoOrdsOfRectTwo))) {
     xCoOrdsOfRectOne.addAll(xCoOrdsOfRectTwo);
     yCoOrdsOfRectOne.addAll(yCoOrdsOfRectTwo);
     xCoOrdsOfRectOne.sort();
     yCoOrdsOfRectOne.sort();
 
-    return ((xCoOrdsOfRectOne[1] - xCoOrdsOfRectOne[2]).abs()) *
-        ((yCoOrdsOfRectOne[1] - yCoOrdsOfRectOne[2]).abs());
+    return ((xCoOrdsOfRectOne[2] - xCoOrdsOfRectOne[1])) *
+        ((yCoOrdsOfRectOne[2] - yCoOrdsOfRectOne[1]));
   }
 
   return 0;
